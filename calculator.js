@@ -24,9 +24,6 @@ for(let i = 0; i < operator.length; i++) {
             let output = getOutput();
             let history = getHistory();
             if (output === "" && history !== "") {
-               /* if (isNaN(history[history.length - 1])) {
-                    history= history.substr(0,history.length-1);
-                }*/
                 history= history.substr(0,history.length-1);
             }
             if (output !== "" || history !== "") {
@@ -56,21 +53,14 @@ let microphone = document.getElementById("microphone");
 microphone.onclick = function () {
     let recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition
         || window.mozSpeechRecognition || window.msSpeechRecognition)();
-    recognition.lang = 'ru-Ru';
+    recognition.lang = 'en-US';
     recognition.start();
-    operations = {"$times": "*"}
-    recognition.onresult = function (event) {
+    recognition.onresult = (event) => {
         let input = event.results[0][0].transcript;
-        if (input.includes("0x445")) {
-            input = input.replace("0x445", "*");
-        }
-        /*for (property in operations) {
-            input = input.replace(property, operations[property]);
-        }*/
         document.getElementById("output-text").innerText=input;
         setTimeout(function () {
             evaluate(input);
-        }, 4000);
+        }, 2000);
     }
     function evaluate(input) {
         try {
